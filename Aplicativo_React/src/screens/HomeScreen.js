@@ -1,7 +1,33 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { db } from '../config/FirebaseConfig'
+import { collection, getDocs } from 'firebase/firestore'
 
-const HomeScreen = ( navigation ) => {
+const HomeScreen = ({ navigation }) => {
+
+  const [courses, setCourses] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null) /* O erro nasce null pq não quero que o erro fique aparecendo assim que eu entro */
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "cursos")) /* Aqui tou puxando o banco do firebase de cursos para aqui */
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setCourses(data)
+      } catch (error) {
+        console.error("Erro ao buscar cursos no Firestore", error)
+        setError("Não foi possível carregar os cursos. Tente novamente.")
+      } finally { 
+        setLoading(false)
+      }
+    }
+    fetchCourses()
+  }, [])
+
 
     const items = [
         { id: '1', name: 'Curso de React Native', description: 'Aprenda a criar apps para Android e iOS' },
@@ -10,17 +36,19 @@ const HomeScreen = ( navigation ) => {
         { id: '4', name: 'Curso de Python para Data Science', description: 'Analise dados com Python' }
     ]
 
-    const goToDetailScreen = (course) => {
-      navigation.navigate("Details", { course })
+    const goToDetailsScreen = (course) => {
+      navigation.navigate('Details', { course })
     }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>📚 Cursos Disponíveis</Text>
       <FlatList
-      data={items}
+      data={courses}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <TouchableOpacity style={styles.itemContainer} onPress={() => goToDetailScreen(item)}>
+        <TouchableOpacity style={styles.itemContainer} 
+        onPress={ () => goToDetailsScreen(item) }>
             <Text style={styles.itemTitle}>{item.name}</Text>
             <Text style={styles.itemDescription}>{item.description}</Text>
         </TouchableOpacity>

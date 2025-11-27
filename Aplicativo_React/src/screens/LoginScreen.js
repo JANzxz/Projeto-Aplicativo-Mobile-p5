@@ -36,7 +36,7 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setSenha}
       />
 
-      <Button title="Entrar" onPress={goToHomeScreen}/>
+      <Button title="Entrar" onPress={goToHomeScreen} />
 
       <View style={styles.linksRow}>
         <Text>Esqueceu a senha?</Text>

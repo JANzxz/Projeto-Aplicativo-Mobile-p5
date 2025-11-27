@@ -2,17 +2,17 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import React, { useState } from 'react'
 import { Button } from 'react-native-web'
 
-const LoginScreen = () => {
+const LoginScreen = () => { /* Aqui vai ser guardado as senhas e emails */
     
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
+    const [email, setEmail] = useState("") /* useState par agerenciar estado  */
+    const [senha, setSenha] = useState("") /* a string vazia e para o usuario poder digitar */
 
   return (
 
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
 
-      <TextInput
+      <TextInput /* para digitar no site */
         placeholder='Digite seu email'
         style={styles.input}
         value={email}
@@ -36,21 +36,31 @@ const LoginScreen = () => {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({  /* Aqui e onde e definido o estilo que vai ser chamado la encima */
     container:{
-        flex: 1, alignItems: "center", padding: 20, justifyContent: "center"
+        flex: 1,
+        alignItems: "center",
+        padding: 20,
+        justifyContent: "center"
     },
 
     title:{
-        fontSize: 24, fontWeight: "bold", marginBottom: 20
+        fontSize: 24,
+        fontWeight: "bold",
+        marginBottom: 20
     },
 
     input:{
-        width: "100%", borderBottomWidth: 1, marginBottom: 20, padding: 8
+        width: "100%",
+        borderBottomWidth: 1,
+        marginBottom: 20,
+        padding: 8
     },
     
     orText:{
-        marginVertical: 20, fontSize: 16, color: "#555"
+        marginVertical: 20, 
+        fontSize: 16, 
+        color: "#555"
     },
 
     socialBottons:{
@@ -65,7 +75,6 @@ const styles = StyleSheet.create({
 
     icon:{marginRight: 10},
     socialText: {color: "#fff", fontSize: 16, fontWeight: "bold"}
-
 
 })
 
